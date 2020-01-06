@@ -20,7 +20,18 @@ public class Pack {
     private Date deliveryDate;
     private Date receivedDate;
     private String deliveryName;
+
+
+
     @PrimaryKey(autoGenerate = true)
+    private int iKey;
+    public int getiKey() {
+        return iKey;
+    }
+
+    public void setiKey(int iKey) {
+        this.iKey = iKey;
+    }
     private  String aKey;
 
     public Pack() {

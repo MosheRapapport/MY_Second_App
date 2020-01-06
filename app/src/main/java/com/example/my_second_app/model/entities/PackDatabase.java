@@ -10,8 +10,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.my_second_app.model.entities.enums.Converters;
+
 @Database(entities = {Pack.class}, version = 1)
-//@TypeConverters({Converters.class})
+@TypeConverters({Converters.class})
 public abstract class PackDatabase extends RoomDatabase {
     private static PackDatabase instance;
 

@@ -20,7 +20,7 @@ public interface PackDao {
     void delete(Pack pack);
 
     @Query("DELETE FROM pack_table")
-    void deleteAllNotes();
+    void deleteAllPacks();
 
     @Query("SELECT * FROM pack_table ORDER BY priority DESC")
     LiveData<List<Pack>> getAllPacks();

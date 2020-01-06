@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class PackRepository {
-    private PackDao PackDao;
+    private PackDao packDao;
    // private DatabaseReference packsRef;
 
     private LiveData<List<Pack>> allPacks;
@@ -21,7 +21,7 @@ public class PackRepository {
 
         PackDao = database.PackDao();
 
-        allPacks = PackDao.getAllNotes();
+        allPacks = PackDao.getAllPacks();
     }
 
     public void insert(Pack pack) {
@@ -29,84 +29,84 @@ public class PackRepository {
 //        notesRef.push().setValue(note);
     }
 
-    public void update(Note note) {
-        new UpdateNoteAsyncTask(PackDao).execute(note);
+    public void update(Pack pack) {
+        new UpdateNoteAsyncTask(PackDao).execute(pack);
     }
 
-    public void delete(Note note) {
-        new DeleteNoteAsyncTask(PackDao).execute(note);
+    public void delete(Pack pack) {
+        new DeletePackAsyncTask(PackDao).execute(pack);
     }
 
-    public void deleteAllNotes() {
-        new DeleteAllNotesAsyncTask(PackDao).execute();
+    public void deleteAllPacks() {
+        new DeleteAllPackAsyncTask(PackDao).execute();
     }
 
-    public LiveData<List<Note>> getAllNotes() {
-        return allNotes;
+    public LiveData<List<Pack>> getAllPacks() {
+        return allPacks;
     }
 
     //region AsyncTask implementation
 
-    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Note> {
-        private NoteDao noteDao;
+    private static class InsertPackAsyncTask extends AsyncTask<Pack, Void, Pack> {
+        private PackDao packDao;
 
-        private InsertNoteAsyncTask(NoteDao noteDao) {
-            this.noteDao = noteDao;
+        private InsertPackAsyncTask(PackDao packDao) {
+            this.packDao = packDao;
         }
 
         @Override
-        protected Note doInBackground(Note... notes) {
-            long add_id = noteDao.insert(notes[0]);
-            notes[0].setId((int)add_id);
-            return notes[0];
+        protected Pack doInBackground(Pack... packs) {
+            long add_id = packDao.insert(packs[0]);
+            packs[0].setId((int)add_id);
+            return packs[0];
         }
         @Override
-        protected void onPostExecute(Note note){
+        protected void onPostExecute(Pack pack){
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference notesRef = firebaseDatabase.getReference("notes");;
-            notesRef.push().setValue(note);
+            DatabaseReference packsRef = firebaseDatabase.getReference("packs");;
+            packsRef.push().setValue(pack);
         }
 
     }
 
-    private static class UpdateNoteAsyncTask extends AsyncTask<Note, Void, Void> {
-        private NoteDao noteDao;
+    private static class UpdatePackAsyncTask extends AsyncTask<Pack, Void, Void> {
+        private PackDao packDao;
 
-        private UpdateNoteAsyncTask(NoteDao noteDao) {
-            this.noteDao = noteDao;
+        private UpdatePackAsyncTask(PackDao packDao) {
+            this.packDao = packDao;
         }
 
         @Override
-        protected Void doInBackground(Note... notes) {
-            noteDao.update(notes[0]);
+        protected Void doInBackground(Pack... packs) {
+            packDao.update(packs[0]);
             return null;
         }
     }
 
-    private static class DeleteNoteAsyncTask extends AsyncTask<Note, Void, Void> {
-        private NoteDao noteDao;
+    private static class DeletePackAsyncTask extends AsyncTask<Pack, Void, Void> {
+        private PackDao packDao;
 
-        private DeleteNoteAsyncTask(NoteDao noteDao) {
-            this.noteDao = noteDao;
+        private DeletePackAsyncTask(PackDao packsDao) {
+            this.packsDao = packsDao;
         }
 
         @Override
-        protected Void doInBackground(Note... notes) {
-            noteDao.delete(notes[0]);
+        protected Void doInBackground(Pack... packs) {
+            noteDao.delete(packs[0]);
             return null;
         }
     }
 
-    private static class DeleteAllNotesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private NoteDao noteDao;
+    private static class DeleteAllPacksAsyncTask extends AsyncTask<Void, Void, Void> {
+        private PackDao packDao;
 
-        private DeleteAllNotesAsyncTask(NoteDao noteDao) {
-            this.noteDao = noteDao;
+        private DeleteAllPacksAsyncTask(PackDao packDao) {
+            this.packDao = packDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            noteDao.deleteAllNotes();
+            PackDao.deleteAllPacks();
             return null;
         }
     }
