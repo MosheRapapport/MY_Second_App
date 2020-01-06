@@ -1,4 +1,4 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
 
 public class Address {
     private String city;

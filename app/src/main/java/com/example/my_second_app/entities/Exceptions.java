@@ -1,4 +1,4 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
 
 public class Exceptions {
     public static boolean checkOnlyLetters(String value) {

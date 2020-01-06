@@ -1,44 +1,48 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.model;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.my_second_app.entities.Pack;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class PackRepository {
     private PackDao packDao;
-   // private DatabaseReference packsRef;
+    private DatabaseReference packsRef;
 
     private LiveData<List<Pack>> allPacks;
 
     public PackRepository(Application application) {
         PackDatabase database = PackDatabase.getInstance(application);
         // Write a message to the database
-       // FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        //packsRef = firebaseDatabase.getReference("packs");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        packsRef = firebaseDatabase.getReference("packsllist");
 
-        PackDao = database.PackDao();
+        packDao = database.packDao();
 
-        allPacks = PackDao.getAllPacks();
+        allPacks = packDao.getAllPacks();
     }
 
     public void insert(Pack pack) {
-        new InsertNoteAsyncTask(PackDao).execute(Pack);
-//        notesRef.push().setValue(note);
+        new InsertPackAsyncTask(packDao).execute(pack);
+        packsRef.push().setValue(pack);
     }
 
     public void update(Pack pack) {
-        new UpdateNoteAsyncTask(PackDao).execute(pack);
+        new UpdatePackAsyncTask(packDao).execute(pack);
     }
 
     public void delete(Pack pack) {
-        new DeletePackAsyncTask(PackDao).execute(pack);
+        new DeletePackAsyncTask(packDao).execute(pack);
     }
 
     public void deleteAllPacks() {
-        new DeleteAllPackAsyncTask(PackDao).execute();
+        new DeleteAllPacksAsyncTask(packDao).execute();
     }
 
     public LiveData<List<Pack>> getAllPacks() {
@@ -57,7 +61,7 @@ public class PackRepository {
         @Override
         protected Pack doInBackground(Pack... packs) {
             long add_id = packDao.insert(packs[0]);
-            packs[0].setId((int)add_id);
+            packs[0].setIKey((int)add_id);
             return packs[0];
         }
         @Override
@@ -87,12 +91,12 @@ public class PackRepository {
         private PackDao packDao;
 
         private DeletePackAsyncTask(PackDao packsDao) {
-            this.packsDao = packsDao;
+            this.packDao = packsDao;
         }
 
         @Override
         protected Void doInBackground(Pack... packs) {
-            noteDao.delete(packs[0]);
+            packDao.delete(packs[0]);
             return null;
         }
     }
@@ -106,7 +110,7 @@ public class PackRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            PackDao.deleteAllPacks();
+            packDao.deleteAllPacks();
             return null;
         }
     }

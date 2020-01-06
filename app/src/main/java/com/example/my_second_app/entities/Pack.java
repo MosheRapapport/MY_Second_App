@@ -1,11 +1,12 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.my_second_app.model.entities.enums.PackStatus;
-import com.example.my_second_app.model.entities.enums.PackType;
-import com.example.my_second_app.model.entities.enums.PackWeight;
+import com.example.my_second_app.entities.enums.PackStatus;
+import com.example.my_second_app.entities.enums.PackType;
+import com.example.my_second_app.entities.enums.PackWeight;
 
 import java.util.Date;
 
@@ -14,7 +15,9 @@ public class Pack {
     private PackType packType;
     private PackWeight packWeight;
     private boolean packFragile;
+    @Embedded
     private Person recipient;
+    @Embedded
     private AddressAndLocation storageLocation;
     private PackStatus packStatus;
     private Date deliveryDate;
@@ -25,13 +28,14 @@ public class Pack {
 
     @PrimaryKey(autoGenerate = true)
     private int iKey;
-    public int getiKey() {
+    public int getIKey() {
         return iKey;
     }
 
-    public void setiKey(int iKey) {
+    public void setIKey(int iKey) {
         this.iKey = iKey;
     }
+
     private  String aKey;
 
     public Pack() {
@@ -108,9 +112,9 @@ public class Pack {
 
     public void setDeliveryName(String deliveryName) { this.deliveryName = deliveryName; }
 
-    public String getaKey() { return aKey; }
+    public String getAKey() { return aKey; }
 
-    public void setaKey(String aKey) { this.aKey = aKey; }
+    public void setAKey(String aKey) { this.aKey = aKey; }
 
 
 }

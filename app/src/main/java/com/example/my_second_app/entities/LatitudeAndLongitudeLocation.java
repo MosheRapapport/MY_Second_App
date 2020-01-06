@@ -1,4 +1,4 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
 
 import android.location.Location;
 
@@ -15,19 +15,19 @@ public class LatitudeAndLongitudeLocation {
         mLongitude=location.getLongitude();
     }
 
-    public double getmLatitude() {
+    public double getMLatitude() {
         return mLatitude;
     }
 
-    public void setmLatitude(double mLatitude) {
+    public void setMLatitude(double mLatitude) {
         this.mLatitude = mLatitude;
     }
 
-    public double getmLongitude() {
+    public double getMLongitude() {
         return mLongitude;
     }
 
-    public void setmLongitude(double mLongitude) {
+    public void setMLongitude(double mLongitude) {
         this.mLongitude = mLongitude;
     }
 

@@ -1,4 +1,6 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
+
+import androidx.room.Ignore;
 
 public class Person {
     private String id;
@@ -6,6 +8,7 @@ public class Person {
     private String lastName;
     private String phoneNumber;
     private String email;
+    @Ignore
     private AddressAndLocation address;
 
     public Person() {

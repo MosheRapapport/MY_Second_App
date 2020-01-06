@@ -1,4 +1,4 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,14 +10,15 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.my_second_app.model.entities.enums.Converters;
+import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.enums.Converters;
 
 @Database(entities = {Pack.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class PackDatabase extends RoomDatabase {
     private static PackDatabase instance;
 
-    public abstract PackDao noteDao();
+    public abstract PackDao packDao();
 
     public static synchronized PackDatabase getInstance(Context context) {
         if (instance == null) {
@@ -42,7 +43,7 @@ public abstract class PackDatabase extends RoomDatabase {
         private PackDao packDao;
 
         private PopulateDbAsyncTask(PackDatabase db) {
-            packDao= db.noteDao();
+            packDao= db.packDao();
         }
 
         @Override

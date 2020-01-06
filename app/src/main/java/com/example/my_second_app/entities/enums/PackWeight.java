@@ -1,4 +1,4 @@
-package com.example.my_second_app.model.entities.enums;
+package com.example.my_second_app.entities.enums;
 
 public enum PackWeight {
     BETWEEN_0g_TO_500g,

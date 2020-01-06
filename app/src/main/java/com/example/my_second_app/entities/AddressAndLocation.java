@@ -1,23 +1,37 @@
-package com.example.my_second_app.model.entities;
+package com.example.my_second_app.entities;
 
 import android.location.Location;
+
+import androidx.room.Embedded;
 
 public class AddressAndLocation {
     public LatitudeAndLongitudeLocation getmLatitudeAndLongitudeLocation() {
         return mLatitudeAndLongitudeLocation;
     }
 
-    public void setmLatitudeAndLongitudeLocation(LatitudeAndLongitudeLocation mLatitudeAndLongitudeLocation) {
+    public void setMLatitudeAndLongitudeLocation(LatitudeAndLongitudeLocation mLatitudeAndLongitudeLocation) {
         this.mLatitudeAndLongitudeLocation = mLatitudeAndLongitudeLocation;
     }
 
+    public String getMaddress() {
+        return maddress;
+    }
+
+    public void setMaddress(String maddress) {
+        this.maddress = maddress;
+    }
+
+    @Embedded
     private LatitudeAndLongitudeLocation mLatitudeAndLongitudeLocation;
-    private String mAddress;
+    public LatitudeAndLongitudeLocation getMLatitudeAndLongitudeLocation() {
+        return mLatitudeAndLongitudeLocation;
+    }
+    private String maddress;
 
 
     public AddressAndLocation(AddressAndLocation addressAndLocation) {
         mLatitudeAndLongitudeLocation=addressAndLocation.mLatitudeAndLongitudeLocation;
-        mAddress=addressAndLocation.mAddress;
+        maddress =addressAndLocation.maddress;
     }
 
     public AddressAndLocation() {
@@ -25,15 +39,15 @@ public class AddressAndLocation {
 
     public AddressAndLocation(Location location, String address) {
         mLatitudeAndLongitudeLocation =new LatitudeAndLongitudeLocation( location);
-        mAddress = address;
+        maddress = address;
     }
 
 
-    public String getAddress() {
-        return mAddress;
+    public String getMAddress() {
+        return maddress;
     }
 
-    public void setAddress(String address) {
-        mAddress = address;
+    public void setMAddress(String address) {
+        maddress = address;
     }
 }
