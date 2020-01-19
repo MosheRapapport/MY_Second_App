@@ -2,6 +2,7 @@ package com.example.my_second_app.entities;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.my_second_app.entities.enums.PackStatus;
@@ -17,7 +18,7 @@ public class Pack {
     private boolean packFragile;
     @Embedded
     private Person recipient;
-    @Embedded
+    @Ignore
     private AddressAndLocation storageLocation;
     private PackStatus packStatus;
     private Date deliveryDate;
@@ -39,7 +40,7 @@ public class Pack {
     private  String aKey;
 
     public Pack() {
-        deliveryName="yoni";
+
     }
 
     public Pack(PackType packType, PackWeight packWeight, boolean packFragile, Person recipient, AddressAndLocation storageLocation, PackStatus packStatus, Date deliveryDate, Date receivedDate, String deliveryName) {

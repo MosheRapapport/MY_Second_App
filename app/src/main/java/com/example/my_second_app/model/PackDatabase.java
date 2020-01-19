@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.my_second_app.entities.Pack;
 import com.example.my_second_app.entities.enums.Converters;
 
-@Database(entities = {Pack.class}, version = 1)
+@Database(entities = {Pack.class},exportSchema=false,version=2 )
 @TypeConverters({Converters.class})
 public abstract class PackDatabase extends RoomDatabase {
     private static PackDatabase instance;

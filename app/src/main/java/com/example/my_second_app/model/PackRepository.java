@@ -21,7 +21,7 @@ public class PackRepository {
         PackDatabase database = PackDatabase.getInstance(application);
         // Write a message to the database
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        packsRef = firebaseDatabase.getReference("packsllist");
+        packsRef = firebaseDatabase.getReference("packs");
 
         packDao = database.packDao();
 
@@ -97,6 +97,7 @@ public class PackRepository {
         @Override
         protected Void doInBackground(Pack... packs) {
             packDao.delete(packs[0]);
+
             return null;
         }
     }
@@ -110,6 +111,7 @@ public class PackRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
             packDao.deleteAllPacks();
             return null;
         }
