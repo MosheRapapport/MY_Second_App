@@ -23,6 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Button"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="307dp" />
+        tools:layout_editor_absoluteX="-129dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

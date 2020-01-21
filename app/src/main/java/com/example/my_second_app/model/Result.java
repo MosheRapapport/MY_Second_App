@@ -1,4 +1,4 @@
-package com.example.my_second_app.ui.data;
+package com.example.my_second_app.model;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

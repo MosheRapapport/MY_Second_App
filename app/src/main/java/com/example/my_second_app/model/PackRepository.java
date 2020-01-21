@@ -39,6 +39,8 @@ public class PackRepository {
 
     public void delete(Pack pack) {
         new DeletePackAsyncTask(packDao).execute(pack);
+        packsRef.child(pack.getAKey()).removeValue();
+
     }
 
     public void deleteAllPacks() {

@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.my_second_app.R;
-import com.example.my_second_app.ui.data.LoginRepository;
-import com.example.my_second_app.ui.data.Result;
-import com.example.my_second_app.ui.data.model.LoggedInUser;
+import com.example.my_second_app.model.LoginRepository;
+import com.example.my_second_app.model.Result;
+import com.example.my_second_app.model.LoggedInUser;
 
 public class LoginViewModel extends ViewModel {
 

@@ -1,12 +1,12 @@
 package com.example.my_second_app.ui.ui.login;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -120,11 +120,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                createAccount(usernameEditText.toString().toString(),passwordEditText.toString().toString());
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-
-                openactivity();
+                createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+                signin(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+               openactivity();
             }
         });
 
@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
        // updateUI(currentUser);
     }
 
-    public  void createAccount(String email,String password)
+    public  void createAccount(final String email,final String password)
     {
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -148,10 +148,12 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
                         } else {
+
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "register failed.",
                                     Toast.LENGTH_SHORT).show();
+
                            // updateUI(null);
                         }
 
@@ -162,19 +164,21 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void signin(String email,String password)
     {
-        mAuth.signInWithEmailAndPassword("yonilabel@gmail.com", "8765409")
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
+                            Toast.makeText(LoginActivity.this, "signin succses.",
+                                    Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                            // updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Auth failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
@@ -204,8 +208,15 @@ public class LoginActivity extends AppCompatActivity {
         return user;
     }
     public void openactivity(){
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        String email=user.getEmail();
         Intent intent=new Intent(this, MainActivity.class);
+        intent.putExtra("email",email);
         startActivity(intent);
+
+
+
+
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

@@ -1,6 +1,4 @@
-package com.example.my_second_app.ui.data;
-
-import com.example.my_second_app.ui.data.model.LoggedInUser;
+package com.example.my_second_app.model;
 
 import java.io.IOException;
 
@@ -16,7 +14,7 @@ public class LoginDataSource {
             LoggedInUser fakeUser =
                     new LoggedInUser(
                             java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
+                            username);
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
