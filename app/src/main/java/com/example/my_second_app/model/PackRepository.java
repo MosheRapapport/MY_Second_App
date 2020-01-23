@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +20,7 @@ public class PackRepository {
     private PackDao packDao;
     private DatabaseReference packsRef;
 
-    private LiveData<List<Pack>> allPacks;
+    private LiveData<List<PackShow>> allPacks;
 
     public PackRepository(Application application) {
         PackDatabase database = PackDatabase.getInstance(application);
@@ -29,7 +30,7 @@ public class PackRepository {
 
         packDao = database.packDao();
 
-        allPacks = packDao.getAllPacks();
+        allPacks = packDao.getAllPacksShow();
     }
 
     public void getHistoryParcels(){
@@ -40,7 +41,14 @@ public class PackRepository {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Pack pack = snapshot.getValue(Pack.class);
-                        insert(pack);
+                        PackShow packShow = new PackShow(pack.getPackType(),
+                                                            pack.getPackWeight(),
+                                                            pack.isPackFragile(),
+                                                            pack.getPackStatus(),
+                                                            pack.getDeliveryName(),
+                                                            pack.getStorageLocation().getMAddress(),
+                                                            pack.getAKey());
+                        insert(packShow);
                     }
                 }
             }
@@ -51,15 +59,15 @@ public class PackRepository {
             }
         });
     }
-    public void insert(Pack pack) {
+    public void insert(PackShow pack) {
         new InsertPackAsyncTask(packDao).execute(pack);
     }
 
-    public void update(Pack pack) {
+    public void update(PackShow pack) {
         new UpdatePackAsyncTask(packDao).execute(pack);
     }
 
-    public void delete(Pack pack) {
+    public void delete(PackShow pack) {
         new DeletePackAsyncTask(packDao).execute(pack);
         packsRef.child(pack.getAKey()).removeValue();
 
@@ -69,13 +77,13 @@ public class PackRepository {
         new DeleteAllPacksAsyncTask(packDao).execute();
     }
 
-    public LiveData<List<Pack>> getAllPacks() {
+    public LiveData<List<PackShow>> getAllPacks() {
         return allPacks;
     }
 
     //region AsyncTask implementation
 
-    private static class InsertPackAsyncTask extends AsyncTask<Pack, Void, Void> {
+    private static class InsertPackAsyncTask extends AsyncTask<PackShow, Void, Void> {
         private PackDao packDao;
 
         private InsertPackAsyncTask(PackDao packDao) {
@@ -83,8 +91,8 @@ public class PackRepository {
         }
 
         @Override
-        protected Void doInBackground(Pack... packs) {
-            for(Pack pack:packs){
+        protected Void doInBackground(PackShow... packs) {
+            for(PackShow pack:packs){
                 packDao.insert(pack);
             }
                 return null;
@@ -92,7 +100,7 @@ public class PackRepository {
 
     }
 
-    private static class UpdatePackAsyncTask extends AsyncTask<Pack, Void, Void> {
+    private static class UpdatePackAsyncTask extends AsyncTask<PackShow, Void, Void> {
         private PackDao packDao;
 
         private UpdatePackAsyncTask(PackDao packDao) {
@@ -100,13 +108,13 @@ public class PackRepository {
         }
 
         @Override
-        protected Void doInBackground(Pack... packs) {
+        protected Void doInBackground(PackShow... packs) {
             packDao.update(packs[0]);
             return null;
         }
     }
 
-    private static class DeletePackAsyncTask extends AsyncTask<Pack, Void, Void> {
+    private static class DeletePackAsyncTask extends AsyncTask<PackShow, Void, Void> {
         private PackDao packDao;
 
         private DeletePackAsyncTask(PackDao packsDao) {
@@ -114,7 +122,7 @@ public class PackRepository {
         }
 
         @Override
-        protected Void doInBackground(Pack... packs) {
+        protected Void doInBackground(PackShow... packs) {
             packDao.delete(packs[0]);
 
             return null;
@@ -131,7 +139,7 @@ public class PackRepository {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            packDao.deleteAllPacks();
+            packDao.deleteAllPacksShow();
             return null;
         }
     }

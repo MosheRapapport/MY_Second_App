@@ -11,12 +11,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.my_second_app.R;
-import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 
 import java.util.List;
 
 public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleViewAdapter.PackViewHolder> {
-    List<Pack> packs;
+    List<PackShow> packs;
 
 
 
@@ -32,14 +32,14 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
     @Override
     public void onBindViewHolder(PackViewHolder holder, int position) {
 
-        Pack pack = packs.get(position);
+        PackShow pack = packs.get(position);
         holder.HeaderTextView.setText("Package number "+(position+1));
-        holder.FirstNameTextView.setText("Recipient First Name: "+pack.getRecipient().getFirstName());
-        holder.LastNameTextView.setText("Recipient Last Name: "+pack.getRecipient().getLastName());
-        holder.PhoneTextView.setText("Recipient Phone Number: "+pack.getRecipient().getPhoneNumber());
+        holder.PackStatusTextView.setText("Package Status: "+pack.getPackStatus().toString());
+        holder.PackFragileTextView.setText("Package Fragile: "+pack.getPackFragile());
+        holder.DeliveryNameTextView.setText("Delivery Name: "+pack.getDeliveryName());
         holder.PackTypeTextView.setText("Package Type: "+pack.getPackType().toString());
         holder.PackWeightTextView.setText("Package Weight: "+pack.getPackWeight().toString());
-        holder.StorageLocationTextView.setText("Storage Location: "+pack.getStorageLocation().getMAddress());
+        holder.StorageLocationTextView.setText("Storage Location: "+pack.getAddress());
 
     }
 
@@ -48,33 +48,33 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
         return packs.size();
     }
 
-    public void setPacks(List<Pack> packs)
+    public void setPacks(List<PackShow> packs)
     {
         this.packs=packs;
         notifyDataSetChanged();
     }
 
-    public Pack getPackAt(int position) {
+    public PackShow getPackAt(int position) {
         return packs.get(position);
     }
 
     class PackViewHolder extends RecyclerView.ViewHolder {
 
         TextView HeaderTextView;
-        TextView FirstNameTextView;
-        TextView LastNameTextView;
-        TextView PhoneTextView;
         TextView PackTypeTextView;
         TextView PackWeightTextView;
+        TextView PackStatusTextView;
+        TextView PackFragileTextView;
+        TextView DeliveryNameTextView;
         TextView StorageLocationTextView;
 
 
         PackViewHolder(View itemView) {
             super(itemView);
             HeaderTextView= itemView.findViewById(R.id.HeaderTextView);
-            FirstNameTextView = itemView.findViewById(R.id.firstNameView);
-            LastNameTextView = itemView.findViewById(R.id.lastNameView);
-            PhoneTextView = itemView.findViewById(R.id.phoneView);
+            PackStatusTextView = itemView.findViewById(R.id.firstNameView);
+            PackFragileTextView = itemView.findViewById(R.id.lastNameView);
+            DeliveryNameTextView = itemView.findViewById(R.id.phoneView);
             StorageLocationTextView = itemView.findViewById(R.id.storageLocationView);
             PackTypeTextView = itemView.findViewById(R.id.packTypeView);
             PackWeightTextView = itemView.findViewById(R.id.packWeightView);

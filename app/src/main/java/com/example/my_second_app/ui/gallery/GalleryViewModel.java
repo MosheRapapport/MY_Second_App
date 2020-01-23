@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 import com.example.my_second_app.model.PackRepository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class GalleryViewModel extends AndroidViewModel {
 
     private PackRepository repository;
-    private LiveData<List<Pack>> allPacks;
+    private LiveData<List<PackShow>> allPacks;
 
     public GalleryViewModel(@NonNull Application application) {
         super(application);
@@ -23,5 +23,5 @@ public class GalleryViewModel extends AndroidViewModel {
         allPacks=repository.getAllPacks();
     }
 
-    public LiveData<List<Pack>> getAllPacks(){return allPacks;}
+    public LiveData<List<PackShow>> getAllPacks(){return allPacks;}
 }

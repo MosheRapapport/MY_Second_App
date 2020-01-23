@@ -32,11 +32,11 @@ public class PackShow {
         this.aKey = aKey;
     }
 
-    public int getiKey() {
+    public int getIKey() {
         return iKey;
     }
 
-    public void setiKey(int iKey) {
+    public void setIKey(int iKey) {
         this.iKey = iKey;
     }
 
@@ -56,7 +56,7 @@ public class PackShow {
         this.packWeight = packWeight;
     }
 
-    public boolean isPackFragile() {
+    public boolean getPackFragile() {
         return packFragile;
     }
 
@@ -88,11 +88,11 @@ public class PackShow {
         this.address = address;
     }
 
-    public String getaKey() {
+    public String getAKey() {
         return aKey;
     }
 
-    public void setaKey(String aKey) {
+    public void setAKey(String aKey) {
         this.aKey = aKey;
     }
 }

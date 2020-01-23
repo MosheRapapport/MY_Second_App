@@ -6,14 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 import com.example.my_second_app.model.PackRepository;
 
 import java.util.List;
 
 public class PackViewModel extends AndroidViewModel {
     private PackRepository repository;
-    private LiveData<List<Pack>> allPacks;
+    private LiveData<List<PackShow>> allPacks;
 
     public PackViewModel(@NonNull Application application) {
         super(application);
@@ -21,15 +21,15 @@ public class PackViewModel extends AndroidViewModel {
         allPacks = repository.getAllPacks();
     }
 
-    public void insert(Pack pack) {
+    public void insert(PackShow pack) {
         repository.insert(pack);
     }
 
-    public void update(Pack pack) {
+    public void update(PackShow pack) {
         repository.update(pack);
     }
 
-    public void delete(Pack pack) {
+    public void delete(PackShow pack) {
         repository.delete(pack);
     }
 
@@ -37,7 +37,7 @@ public class PackViewModel extends AndroidViewModel {
         repository.deleteAllPacks();
     }
 
-    public LiveData<List<Pack>> getAllPacks() {
+    public LiveData<List<PackShow>> getAllPacks() {
         return allPacks;
     }
 }

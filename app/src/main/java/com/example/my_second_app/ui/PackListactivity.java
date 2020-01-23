@@ -7,15 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.my_second_app.entities.AddressAndLocation;
 import com.example.my_second_app.entities.Pack;
-import com.example.my_second_app.entities.Person;
-import com.example.my_second_app.entities.enums.PackStatus;
-import com.example.my_second_app.entities.enums.PackType;
-import com.example.my_second_app.entities.enums.PackWeight;
 import com.example.my_second_app.viewModel.PackViewModel;
 
-import java.util.Date;
 import java.util.List;
 
 public class PackListactivity extends AppCompatActivity {
@@ -25,8 +19,8 @@ public class PackListactivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         packViewModel = ViewModelProviders.of(this).get(PackViewModel.class);
-       Pack pack=new Pack(PackType.BIGֹ_PACKAGE, PackWeight.BETWEEN_0g_TO_500g,true,new Person(),new AddressAndLocation(), PackStatus.SHIPPED, new Date(),new Date(), "deliveryName");
-        packViewModel.insert(pack);
+        //PackShow pack=new Pack(PackType.BIGֹ_PACKAGE, PackWeight.BETWEEN_0g_TO_500g,true,new Person(),new AddressAndLocation(), PackStatus.SHIPPED, new Date(),new Date(), "deliveryName");
+        //packViewModel.insert(pack);
         //packs=packViewModel.getAllPacks();
     }
 }

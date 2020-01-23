@@ -10,10 +10,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 import com.example.my_second_app.entities.enums.Converters;
+import com.example.my_second_app.entities.enums.PackStatus;
+import com.example.my_second_app.entities.enums.PackType;
+import com.example.my_second_app.entities.enums.PackWeight;
 
-@Database(entities = {Pack.class},version=2 )
+@Database(entities = {PackShow.class},version=2 )
 @TypeConverters({Converters.class})
 public abstract class PackDatabase extends RoomDatabase {
     private static PackDatabase instance;
@@ -48,9 +51,13 @@ public abstract class PackDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            packDao.insert(new Pack());
-            packDao.insert(new Pack());
-            packDao.insert(new Pack());
+            packDao.insert(new PackShow(PackType.BIGֹ_PACKAGE,
+                                        PackWeight.BETWEEN_0g_TO_500g,
+                                        true,
+                                        PackStatus.OFFER_TO_COLLECT,
+                                        "NO","Address","1234"));
+//            packDao.insert(new Pack());
+//            packDao.insert(new Pack());
             return null;
         }
     }

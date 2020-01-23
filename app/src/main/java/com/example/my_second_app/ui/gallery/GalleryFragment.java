@@ -14,19 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.my_second_app.R;
-import com.example.my_second_app.entities.Pack;
+import com.example.my_second_app.entities.PackShow;
 import com.example.my_second_app.ui.packRecycleViewAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
     private RecyclerView packsRecycleView;
-    List<Pack> allPacks;
+    List<PackShow> allPacks;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,17 +39,17 @@ public class GalleryFragment extends Fragment {
 
         final packRecycleViewAdapter adapter = new packRecycleViewAdapter();
         packsRecycleView.setAdapter(adapter);
-        HashMap<String,Object> hashMap = new HashMap();
-        hashMap.put("deliveryName","NOO");
+//        HashMap<String,Object> hashMap = new HashMap();
+//        hashMap.put("deliveryName","NOO");
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference packsRef = firebaseDatabase.getReference("packs");
-        packsRef.updateChildren(hashMap);
+//        packsRef.updateChildren(hashMap);
 
 
-        galleryViewModel.getAllPacks().observe(this, new Observer<List<Pack>>() {
+        galleryViewModel.getAllPacks().observe(this, new Observer<List<PackShow>>() {
             @Override
-            public void onChanged(@Nullable List<Pack> packs) {
+            public void onChanged(@Nullable List<PackShow> packs) {
                 adapter.setPacks(packs);
             }
         });
