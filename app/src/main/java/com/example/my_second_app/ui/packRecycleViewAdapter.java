@@ -1,6 +1,5 @@
 package com.example.my_second_app.ui;
 
-import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,18 +16,13 @@ import com.example.my_second_app.entities.Pack;
 import java.util.List;
 
 public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleViewAdapter.PackViewHolder> {
-    private Context baseContext;
     List<Pack> packs;
 
 
-    public packRecycleViewAdapter(Context baseContext, List<Pack> packs) {
-        this.packs = packs;
-        this.baseContext = baseContext;
-    }
 
     @Override
     public PackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(baseContext.getApplicationContext() ).inflate(R.layout.activity_item_view,
+        View v = LayoutInflater.from(parent.getContext() ).inflate(R.layout.activity_item_view,
                 parent,
                 false);
 
@@ -52,6 +46,16 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
     @Override
     public int getItemCount() {
         return packs.size();
+    }
+
+    public void setPacks(List<Pack> packs)
+    {
+        this.packs=packs;
+        notifyDataSetChanged();
+    }
+
+    public Pack getPackAt(int position) {
+        return packs.get(position);
     }
 
     class PackViewHolder extends RecyclerView.ViewHolder {

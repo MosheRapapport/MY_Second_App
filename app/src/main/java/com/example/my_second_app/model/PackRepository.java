@@ -3,11 +3,15 @@ package com.example.my_second_app.model;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.my_second_app.entities.Pack;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -28,9 +32,27 @@ public class PackRepository {
         allPacks = packDao.getAllPacks();
     }
 
+    public void getHistoryParcels(){
+        packsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // read from firebase
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Pack pack = snapshot.getValue(Pack.class);
+                        insert(pack);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
     public void insert(Pack pack) {
         new InsertPackAsyncTask(packDao).execute(pack);
-        packsRef.push().setValue(pack);
     }
 
     public void update(Pack pack) {
@@ -53,7 +75,7 @@ public class PackRepository {
 
     //region AsyncTask implementation
 
-    private static class InsertPackAsyncTask extends AsyncTask<Pack, Void, Pack> {
+    private static class InsertPackAsyncTask extends AsyncTask<Pack, Void, Void> {
         private PackDao packDao;
 
         private InsertPackAsyncTask(PackDao packDao) {
@@ -61,16 +83,11 @@ public class PackRepository {
         }
 
         @Override
-        protected Pack doInBackground(Pack... packs) {
-            long add_id = packDao.insert(packs[0]);
-            packs[0].setIKey((int)add_id);
-            return packs[0];
-        }
-        @Override
-        protected void onPostExecute(Pack pack){
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference packsRef = firebaseDatabase.getReference("packs");;
-            packsRef.push().setValue(pack);
+        protected Void doInBackground(Pack... packs) {
+            for(Pack pack:packs){
+                packDao.insert(pack);
+            }
+                return null;
         }
 
     }

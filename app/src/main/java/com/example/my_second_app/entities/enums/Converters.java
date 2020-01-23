@@ -1,8 +1,11 @@
 package com.example.my_second_app.entities.enums;
-import java.util.Date;
+
 import androidx.room.TypeConverter;
 
+import java.util.Date;
+
 public class Converters {
+
     @TypeConverter
     public static PackStatus getStatus(Integer numeral){
         for(PackStatus ds : PackStatus.values()){
