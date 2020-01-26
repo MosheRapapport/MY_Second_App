@@ -39,6 +39,7 @@ public class PackRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // read from firebase
                 if (dataSnapshot.exists()) {
+                    deleteAllPacks();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Pack pack = snapshot.getValue(Pack.class);
                         PackShow packShow = new PackShow(pack.getPackType(),
@@ -48,7 +49,7 @@ public class PackRepository {
                                                             pack.getDeliveryName(),
                                                             pack.getStorageLocation().getMAddress(),
                                                             pack.getAKey());
-                        update(packShow);
+                        insert(packShow);
                     }
                 }
             }

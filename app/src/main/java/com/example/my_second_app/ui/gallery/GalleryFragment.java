@@ -39,12 +39,9 @@ public class GalleryFragment extends Fragment {
 
         final packRecycleViewAdapter adapter = new packRecycleViewAdapter();
         packsRecycleView.setAdapter(adapter);
-//        HashMap<String,Object> hashMap = new HashMap();
-//        hashMap.put("deliveryName","NOO");
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference packsRef = firebaseDatabase.getReference("packs");
-//        packsRef.updateChildren(hashMap);
 
 
         galleryViewModel.getAllPacks().observe(this, new Observer<List<PackShow>>() {

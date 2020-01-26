@@ -19,7 +19,7 @@ public class GalleryViewModel extends AndroidViewModel {
     public GalleryViewModel(@NonNull Application application) {
         super(application);
         repository = new PackRepository(application);
-        repository.getHistoryParcels();
+  //      repository.getHistoryParcels();
         allPacks=repository.getAllPacks();
     }
 
