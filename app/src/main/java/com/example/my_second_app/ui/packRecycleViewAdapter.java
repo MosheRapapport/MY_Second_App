@@ -45,6 +45,8 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
 
     @Override
     public int getItemCount() {
+        if(packs==null)
+            return 0;
         return packs.size();
     }
 

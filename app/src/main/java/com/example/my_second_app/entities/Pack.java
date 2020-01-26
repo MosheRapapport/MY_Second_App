@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import com.example.my_second_app.entities.enums.PackStatus;
 import com.example.my_second_app.entities.enums.PackType;
 import com.example.my_second_app.entities.enums.PackWeight;
+import com.google.firebase.database.Exclude;
 
 import java.util.Date;
 
@@ -28,6 +29,7 @@ public class Pack {
 
 
     @PrimaryKey(autoGenerate = true)
+    @Exclude
     private int iKey;
     public int getIKey() {
         return iKey;

@@ -16,7 +16,7 @@ import com.example.my_second_app.entities.enums.PackStatus;
 import com.example.my_second_app.entities.enums.PackType;
 import com.example.my_second_app.entities.enums.PackWeight;
 
-@Database(entities = {PackShow.class},version=2 )
+@Database(entities = {PackShow.class},version=1 )
 @TypeConverters({Converters.class})
 public abstract class PackDatabase extends RoomDatabase {
     private static PackDatabase instance;

@@ -48,7 +48,7 @@ public class PackRepository {
                                                             pack.getDeliveryName(),
                                                             pack.getStorageLocation().getMAddress(),
                                                             pack.getAKey());
-                        insert(packShow);
+                        update(packShow);
                     }
                 }
             }
