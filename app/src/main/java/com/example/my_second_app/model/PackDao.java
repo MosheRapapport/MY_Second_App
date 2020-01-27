@@ -24,6 +24,12 @@ public interface PackDao {
     @Query("DELETE FROM pack_show_table")
     void deleteAllPacksShow();
 
+    @Query("DELETE  FROM pack_show_table WHERE aKey = :AKey")
+    void deletePacksShow(String AKey);
+
     @Query("SELECT * FROM pack_show_table")
     LiveData<List<PackShow>> getAllPacksShow();
+
+    @Query("SELECT * FROM pack_show_table WHERE packStatus = 2")
+    LiveData<List<PackShow>> getAll_OFFER_TO_COLLECT_PacksShow();
 }

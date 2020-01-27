@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.my_second_app.R;
 import com.example.my_second_app.entities.PackShow;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -88,13 +90,36 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
                     menu.setHeaderTitle("Select Action");
 
-                    MenuItem show = menu.add(Menu.NONE, 1, 1, "Show");
+                    MenuItem Accept = menu.add(Menu.NONE, 1, 1, "Accept");
+                    MenuItem Reject = menu.add(Menu.NONE, 2, 2, "Reject");
 
-                    show.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    Accept.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             int position = getAdapterPosition();
                             String id = packs.get(position).getAKey();
+                            //                     String status= packs.get(position).getPackStatus().toString();
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            DatabaseReference packsRef = firebaseDatabase.getReference("packs").
+                                    child(id).child("packStatus");
+                            packsRef.setValue("ON_THE_WAY");
+
+
+                            return true;
+                        }
+                    });
+
+                    Reject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            int position = getAdapterPosition();
+                            String id = packs.get(position).getAKey();
+                            //                     String status= packs.get(position).getPackStatus().toString();
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            DatabaseReference packsRef = firebaseDatabase.getReference("packs").
+                                    child(id).child("packStatus");
+                            packsRef.setValue("SHIPPED");
+                            firebaseDatabase.getReference("packs").child(id).child("deliveryName").setValue("NO");
 
 
                             return true;

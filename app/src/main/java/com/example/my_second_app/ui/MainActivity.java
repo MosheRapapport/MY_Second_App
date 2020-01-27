@@ -1,6 +1,5 @@
 package com.example.my_second_app.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                openPackListactivity();
 
 
             }
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.textViewEmail);
-        navUsername.setText(currentUserEmail);
+        //navUsername.setText(currentUserEmail);
 
         //TextView txtView = findViewById(R.id.textViewEmail);
 
@@ -89,10 +87,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-    public void openPackListactivity(){
-        Intent intent=new Intent(this, PackListactivity.class);
-        startActivity(intent);
     }
 
 }
