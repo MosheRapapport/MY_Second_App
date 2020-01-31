@@ -2,8 +2,10 @@ package com.example.my_second_app.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +20,7 @@ import com.example.my_second_app.model.PackRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       Bundle bundle = getIntent().getExtras();
-        String currentUserEmail = bundle.getString("email");
+      // Bundle bundle = getIntent().getExtras();
+       // String currentUserEmail = bundle.getString("email");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -89,4 +92,36 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(MainActivity.this, "Bye Bye.",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+
+          //  case R.id.action_favorite:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+            //    return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+    @Override
+    public void  onDestroy() {
+        super.onDestroy();
+
+
+    }
 }

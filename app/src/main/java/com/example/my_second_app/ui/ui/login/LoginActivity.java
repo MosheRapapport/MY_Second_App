@@ -1,12 +1,13 @@
 package com.example.my_second_app.ui.ui.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -37,17 +38,30 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private FirebaseAuth mAuth;
+
+
+    public boolean ok=false;
+    private ProgressDialog progressDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
         mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getCurrentUser()!=null)
+        {
+            openactivity();
+        }
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        progressDialog=new ProgressDialog(this);
+        loadingProgressBar.setVisibility(View.INVISIBLE);
+       // registerButton.setVisibility(View.GONE);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -56,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 loginButton.setEnabled(loginFormState.isDataValid());
+                registerButton.setEnabled(loginFormState.isDataValid());
+
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
@@ -81,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 
@@ -122,19 +138,52 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+                //createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+
+                progressDialog.setMessage("Connecting to your account...");
+                progressDialog.show();
+
+                //createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString()  );
+
                 signin(usernameEditText.getText().toString(),passwordEditText.getText().toString());
-               openactivity();
+                registerButton.setVisibility(View.VISIBLE);
+               //progressDialog.dismiss();
+
+
+
             }
         });
 
+
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+                //createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+
+                progressDialog.setMessage("creat your account...");
+                progressDialog.show();
+
+                //createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString()  );
+
+                createAccount(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+                // progressDialog.dismiss();
+
+
+
+            }
+        });
+
+
     }
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-       // updateUI(currentUser);
-    }
+
+
+
+
+
 
     public  void createAccount(final String email,final String password)
     {
@@ -145,8 +194,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            //FirebaseUser user = mAuth.getCurrentUser();
                             //updateUI(user);
+                             openactivity();
                         } else {
 
                             // If sign in fails, display a message to the user.
@@ -156,13 +206,13 @@ public class LoginActivity extends AppCompatActivity {
 
                            // updateUI(null);
                         }
-
+                        //openactivity();
                         // ...
                     }
                 });
 
     }
-    public void signin(String email,String password)
+    public void signin(final String  email,final String password)
     {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -173,20 +223,35 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             Toast.makeText(LoginActivity.this, "signin succses.",
                                     Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                           // updateUI(user);
+                          //  FirebaseUser user = mAuth.getCurrentUser();
+
+                            //
+                            //finish();
+                            openactivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Auth failed.",
                                     Toast.LENGTH_SHORT).show();
+                            //Button registerButton = findViewById(R.id.register);
+                           // registerButton.setVisibility(View.VISIBLE);
+                            //progressDialog.setMessage("createUser?...");
+                           // progressDialog.show();
+                           // createAccount(email, password);
                             //updateUI(null);
+                            progressDialog.dismiss();
                         }
 
-                        // ...
+
                     }
                 });
 
+    }
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // updateUI(currentUser);
     }
     public FirebaseUser getCurrentUser()
     {
@@ -208,15 +273,21 @@ public class LoginActivity extends AppCompatActivity {
         return user;
     }
     public void openactivity(){
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
-        String email=user.getEmail();
+     //   FirebaseUser user = mAuth.getInstance().getCurrentUser();
+     //   String email=user.getEmail();
+      //  progressDialog.dismiss();
         Intent intent=new Intent(this, MainActivity.class);
-        intent.putExtra("email",email);
+    //    intent.putExtra("email",email);
         startActivity(intent);
 
+       // reset();
 
 
+    }
 
+    private void reset()
+    {
+        this.recreate();
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
