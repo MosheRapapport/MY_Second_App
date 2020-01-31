@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.my_second_app.entities.Pack;
 import com.example.my_second_app.entities.PackShow;
+import com.example.my_second_app.entities.enums.PackStatus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PackRepository {
@@ -24,6 +26,8 @@ public class PackRepository {
     private DatabaseReference packsRef;
 
     private LiveData<List<PackShow>> allPacks;
+    private List<Pack> allShippedPacks;
+  //  private MutableLiveData<List<Pack>> allShippedPack;
 
     public PackRepository(Application application) {
         PackDatabase database = PackDatabase.getInstance(application);
@@ -34,6 +38,8 @@ public class PackRepository {
         packDao = database.packDao();
 
         allPacks = packDao.getAllPacksShow();
+        allShippedPacks = new ArrayList<Pack>();
+      //  allShippedPack = new MutableLiveData<>();
     }
 
     public void getHistoryParcels(){
@@ -45,6 +51,16 @@ public class PackRepository {
                     deleteAllPacks();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Pack pack = snapshot.getValue(Pack.class);
+
+                        //get freinds pack from firebase
+                        if(pack.getPackStatus()== PackStatus.SHIPPED)
+                        {
+                            allShippedPacks.add(pack);
+                        //    allShippedPack.setValue(allShippedPacks);
+                        }
+                        //get freinds pack from firebase
+
+
                         String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                         String email = pack.getRecipient().getEmail();
                         if (user.equals(email))
@@ -71,6 +87,16 @@ public class PackRepository {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Pack pack = dataSnapshot.getValue(Pack.class);
+
+                //get freinds pack from firebase
+                if(pack.getPackStatus()== PackStatus.SHIPPED)
+                {
+                    allShippedPacks.add(pack);
+            //        allShippedPack.setValue(allShippedPacks);
+                }
+                //get freinds pack from firebase
+
+
                 String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 String email = pack.getRecipient().getEmail();
                 if (user.equals(email))
@@ -90,6 +116,22 @@ public class PackRepository {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Pack pack = dataSnapshot.getValue(Pack.class);
+
+                //get freinds pack from firebase
+                if(pack.getPackStatus()== PackStatus.SHIPPED)
+                {
+                    for (Pack p:allShippedPacks) {
+                        if(p.getAKey()==pack.getAKey())
+                        {
+                            allShippedPacks.remove(p);
+                            allShippedPacks.add(pack);
+                        }
+                    }
+          //          allShippedPack.setValue(allShippedPacks);
+                }
+                //get freinds pack from firebase
+
+
                 deletePack(pack.getAKey());
                 String user = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 String email = pack.getRecipient().getEmail();
@@ -111,6 +153,13 @@ public class PackRepository {
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 deletePack(dataSnapshot.getValue(Pack.class).getAKey());
 
+                //get freinds pack from firebase
+                if(dataSnapshot.getValue(Pack.class).getPackStatus()==PackStatus.SHIPPED)
+                {
+                    allShippedPacks.remove(dataSnapshot.getValue(Pack.class));
+         //           allShippedPack.setValue(allShippedPacks);
+                }
+
             }
 
             @Override
@@ -124,6 +173,14 @@ public class PackRepository {
             }
         });
     }
+
+    //get freinds pack from firebase
+ //   public LiveData<List<Pack>> getAllShippedPacks(){
+ //       return allShippedPack;
+ //   }
+    //get freinds pack from firebase
+
+
     public void insert(PackShow pack) {
         new InsertPackAsyncTask(packDao).execute(pack);
     }
