@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -22,32 +22,18 @@
             android:text="Header" />
 
         <TextView
-            android:id="@+id/firstNameView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="firstNameTextView" />
-
-        <TextView
-            android:id="@+id/lastNameView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="lastNameTextView" />
-
-        <TextView
-            android:id="@+id/phoneView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="phoneTextView" />
-
-        <TextView
             android:id="@+id/storageLocationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="storageLocationTextView" />
+
+        <TextView
+            android:id="@+id/packFregileView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="packFregileTextView" />
 
         <TextView
             android:id="@+id/packTypeView"
@@ -62,6 +48,35 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="packWeightTextView" />
+
+        <TextView
+            android:id="@+id/deliveryNameView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:text="firstAndLastNameTextView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/acceptButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border_to_pack_in_list"
+                android:text="Accept" />
+
+            <Button
+                android:id="@+id/rejectButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border_to_pack_in_list"
+                android:text="Reject" />
+        </LinearLayout>
 
     </LinearLayout>
 

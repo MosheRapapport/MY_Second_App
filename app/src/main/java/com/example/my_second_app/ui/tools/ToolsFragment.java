@@ -47,9 +47,12 @@ public class ToolsFragment extends Fragment {
         liveData.observe(this, new Observer<DataSnapshot>() {
                     @Override
                     public void onChanged(DataSnapshot dataSnapshot) {
+
                         if (dataSnapshot != null) {
+                            allShippedPacks.clear();
                             for (DataSnapshot readData : dataSnapshot.getChildren()) {
                                 Pack data = readData.getValue(Pack.class);
+
                                 allShippedPacks.add(data);
                             }
                             adapter.setPacks(allShippedPacks);
@@ -92,9 +95,9 @@ public class ToolsFragment extends Fragment {
             return packs.size();
         }
 
-        public void setPacks(List<Pack> packs)
+        public void setPacks(List<Pack> packss)
         {
-            this.packs=packs;
+            this.packs=packss;
             notifyDataSetChanged();
         }
 
