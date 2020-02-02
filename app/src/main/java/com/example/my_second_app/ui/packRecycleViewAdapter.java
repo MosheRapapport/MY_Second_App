@@ -54,7 +54,9 @@ public class packRecycleViewAdapter extends RecyclerView.Adapter<packRecycleView
 
     public void setPacks(List<PackShow> packs)
     {
+
         this.packs=packs;
+
         notifyDataSetChanged();
     }
 

@@ -30,6 +30,6 @@ public interface PackDao {
     @Query("SELECT * FROM pack_show_table")
     LiveData<List<PackShow>> getAllPacksShow();
 
-    @Query("SELECT * FROM pack_show_table WHERE packStatus = 2")
+    @Query("SELECT * FROM pack_show_table WHERE packStatus = 1")
     LiveData<List<PackShow>> getAll_OFFER_TO_COLLECT_PacksShow();
 }

@@ -275,7 +275,12 @@ public class LoginActivity extends AppCompatActivity {
     public void openactivity(){
      //   FirebaseUser user = mAuth.getInstance().getCurrentUser();
      //   String email=user.getEmail();
-      //  progressDialog.dismiss();
+        if(progressDialog!=null)
+        {
+            progressDialog.dismiss();
+
+        }
+      //
         Intent intent=new Intent(this, MainActivity.class);
     //    intent.putExtra("email",email);
         startActivity(intent);

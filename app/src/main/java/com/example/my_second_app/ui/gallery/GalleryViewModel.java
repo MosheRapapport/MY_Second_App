@@ -20,8 +20,11 @@ public class GalleryViewModel extends AndroidViewModel {
         super(application);
         repository = new PackRepository(application);
   //      repository.getHistoryParcels();
+
         allPacks=repository.getAllPacks();
     }
 
     public LiveData<List<PackShow>> getAllPacks(){return allPacks;}
+
+
 }

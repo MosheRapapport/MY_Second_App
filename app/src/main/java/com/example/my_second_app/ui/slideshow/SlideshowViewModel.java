@@ -20,8 +20,10 @@ public class SlideshowViewModel extends AndroidViewModel {
         super(application);
         repository = new PackRepository(application);
         //      repository.getHistoryParcels();
+
         allPacks=repository.getAll_OFFER_TO_COLLECT_PacksShow();
     }
 
     public LiveData<List<PackShow>> getAll_OFFER_TO_COLLECT_PacksShow(){return allPacks;}
+
 }

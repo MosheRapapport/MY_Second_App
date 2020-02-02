@@ -47,6 +47,7 @@ public class GalleryFragment extends Fragment {
         galleryViewModel.getAllPacks().observe(this, new Observer<List<PackShow>>() {
             @Override
             public void onChanged(@Nullable List<PackShow> packs) {
+
                 adapter.setPacks(packs);
             }
         });
